@@ -17,6 +17,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("inputfile")
     parser.add_argument("-c","--createcols", action='store_true')
+    parser.add_argument("-l","--limit", type='int')
     parser.add_argument("outputfile")    
     args = parser.parse_args()
 
@@ -24,7 +25,8 @@ if __name__ == '__main__':
                     encoding='utf8', 
                     keep_default_na=False, 
                     on_bad_lines='skip', 
-                    sep='\t')
+                    sep='\t',
+                    nrows=args.limit)
     if args.createcols:
         # Extract unique recordedBy values
         df_rb = df[['recordedBy']].drop_duplicates()
