@@ -15,8 +15,9 @@ ADD https://api.gbif.org/v1/occurrence/download/request/0032228-231002084531237.
 RUN ls -l /data
 RUN unzip /data/gbif-occs.zip -d /data
 RUN ls -l /data
-RUN csvs-to-sqlite /data/occurrences.csv /code/gbifocc.db
+RUN csvs-to-sqlite /data/0032228-231002084531237.csv /code/gbifocc.db
 RUN ls -l /code
+RUN sqlite-utils tables /code/gbifocc.db --counts
 
 RUN sqlite-utils tables /code/ihinst.db --counts
 RUN chmod 755 /code/ihinst.db
