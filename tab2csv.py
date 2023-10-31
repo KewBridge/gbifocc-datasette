@@ -4,6 +4,15 @@ import bananompy
 from tqdm import tqdm
 tqdm.pandas()
 
+def getFirstFamilyName(s):
+    firstFamilyName = None
+    parsed = bananompy.parse(s)
+    try:
+        firstFamilyName = parsed[0]['parsed'][0]['family']
+    except:
+        pass
+    return firstFamilyName
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("inputfile")
