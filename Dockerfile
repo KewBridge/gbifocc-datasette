@@ -26,7 +26,7 @@ RUN \
 RUN gem install dwc_agent
 
 #COPY ./extractcollectorname.py /code/extractcollectorname.py
-RUN python tab2csv.py --limit 1000 --createcols /data/${GBIF_DOWNLOAD_ID}.csv /data/gbifocc-temp.csv 
+RUN python tab2csv.py --limit 1000 --createcols /data/${GBIF_DOWNLOAD_ID}.csv /data/gbifocc.csv 
 #RUN python extractcollectorname.py /data/gbifocc-temp.csv /data/gbifocc.csv 
 RUN csvs-to-sqlite /data/gbifocc.csv /code/gbifocc.db
 RUN ls -l /code
