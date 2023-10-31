@@ -7,7 +7,7 @@
                     "plugins": {
                         "datasette-reconcile": {
                             "id_field": "gbifID",
-                            "name_field": "recordedBy",
+                            "name_field": "collectorNameAndNumber",
                             "type_field": "basisOfRecord",
                             "type_default": [{
                               "id": "basisOfRecord",
