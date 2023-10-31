@@ -7,7 +7,7 @@ tqdm.pandas()
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("inputfile")
-    parser.add_argument("-createcols", action='store_true')
+    parser.add_argument("-c","--createcols", action='store_true')
     parser.add_argument("outputfile")    
     args = parser.parse_args()
 
