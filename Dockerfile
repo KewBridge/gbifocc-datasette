@@ -15,6 +15,7 @@ ADD https://api.gbif.org/v1/occurrence/download/request/0032228-231002084531237.
 RUN ls -l /data
 RUN unzip /data/gbif-occs.zip -d /data
 RUN ls -l /data
+COPY ./tab2csv.py /code/tab2csv.py
 RUN python tab2csv.py /data/0032228-231002084531237.tsv /data/0032228-231002084531237.csv 
 RUN csvs-to-sqlite /data/0032228-231002084531237.csv /code/gbifocc.db
 RUN ls -l /code
