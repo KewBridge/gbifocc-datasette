@@ -1,0 +1,25 @@
+{
+    "title": "nickyn-ih-test",
+    "databases": {
+        "ihinst": {
+            "tables": {
+                "ih-institutions": {
+                    "plugins": {
+                        "datasette-reconcile": {
+                            "id_field": "irn",
+                            "name_field": "code",
+                            "type_field": "organization",
+                            "type_default": [{
+                              "id": "institution",
+                              "name": "Institution"
+                            }],
+                            "max_limit": 5,
+                            "service_name": "IH institution reconciliation",
+                            "view_url": "https://sweetgum.nybg.org/science/ih/herbarium-details/?irn={{id}}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
