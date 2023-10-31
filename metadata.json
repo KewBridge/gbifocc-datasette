@@ -1,21 +1,21 @@
 {
-    "title": "nickyn-ih-test",
+    "title": "gbifocc-reconcile",
     "databases": {
-        "ihinst": {
+        "gbifocc": {
             "tables": {
-                "ih-institutions": {
+                "0032228-231002084531237": {
                     "plugins": {
                         "datasette-reconcile": {
-                            "id_field": "irn",
-                            "name_field": "code",
-                            "type_field": "organization",
+                            "id_field": "gbifID",
+                            "name_field": "recordedBy",
+                            "type_field": "basisOfRecord",
                             "type_default": [{
-                              "id": "institution",
-                              "name": "Institution"
+                              "id": "basisOfRecord",
+                              "name": "PRESERVED_SPECIMEN"
                             }],
                             "max_limit": 5,
-                            "service_name": "IH institution reconciliation",
-                            "view_url": "https://sweetgum.nybg.org/science/ih/herbarium-details/?irn={{id}}"
+                            "service_name": "GBIF specimens reconciliation",
+                            "view_url": "https://gbif.org/occurrence/{{id}}"
                         }
                     }
                 }

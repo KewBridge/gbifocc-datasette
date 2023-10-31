@@ -19,9 +19,9 @@ RUN csvs-to-sqlite /data/0032228-231002084531237.csv /code/gbifocc.db -s $'\t'
 RUN ls -l /code
 RUN sqlite-utils tables /code/gbifocc.db --counts
 
-RUN sqlite-utils tables /code/ihinst.db --counts
-RUN chmod 755 /code/ihinst.db
+#RUN sqlite-utils tables /code/ihinst.db --counts
+RUN chmod 755 /code/gbifocc.db
 
 COPY ./metadata.json /code/metadata.json
 
-CMD ["datasette", "/code/ihinst.db", "-m", "/code/metadata.json", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["datasette", "/code/gbifocc.db", "-m", "/code/metadata.json", "--host", "0.0.0.0", "--port", "7860"]
