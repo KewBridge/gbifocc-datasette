@@ -3,7 +3,7 @@
     "databases": {
         "gbifocc": {
             "tables": {
-                "0032228-231002084531237": {
+                "gbifocc": {
                     "plugins": {
                         "datasette-reconcile": {
                             "id_field": "gbifID",
