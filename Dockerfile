@@ -6,7 +6,7 @@ COPY ./requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-ADD https://drive.google.com/file/d/17mI5W0qiGiBp_RV1jy3QR3KtN7Ah-1Ha/view?usp=sharing /code/ihinst.db
+ADD https://docs.google.com/uc?export=download&id=17mI5W0qiGiBp_RV1jy3QR3KtN7Ah-1Ha /code/ihinst.db
 
 RUN sqlite-utils tables /code/ihinst.db --counts
 RUN chmod 755 /code/ihinst.db
