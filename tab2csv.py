@@ -12,4 +12,4 @@ if __name__ == '__main__':
                     keep_default_na=False, 
                     on_bad_lines='skip', 
                     sep='\t')
-    df.to_csv(outputfile, index=False, sep=',')    
+    df.to_csv(args.outputfile, index=False, sep=',')    
