@@ -31,7 +31,7 @@ RUN python tab2csv.py --limit 1000 --createcols /data/${GBIF_DOWNLOAD_ID}.csv /d
 RUN csvs-to-sqlite /data/gbifocc.csv /code/gbifocc.db
 RUN ls -l /code
 RUN sqlite-utils tables /code/gbifocc.db --counts
-RUN sqlite-utils enable-fts /code/gbifocc.db collectorNameAndNumber
+RUN sqlite-utils enable-fts /code/gbifocc.db gbifocc collectorNameAndNumber
 
 #RUN sqlite-utils tables /code/ihinst.db --counts
 RUN chmod 755 /code/gbifocc.db
