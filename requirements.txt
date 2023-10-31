@@ -1,3 +1,5 @@
 datasette
 datasette-reconcile
 sqlite-utils
+csvs-to-sqlite
+pandas==1.4.0
