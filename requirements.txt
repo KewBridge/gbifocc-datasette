@@ -1,5 +1,6 @@
 datasette
 datasette-reconcile
+datasette-cluster-map
 sqlite-utils
 csvs-to-sqlite
 pandas==1.5.3

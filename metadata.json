@@ -16,6 +16,10 @@
                             "max_limit": 5,
                             "service_name": "GBIF specimens reconciliation",
                             "view_url": "https://gbif.org/occurrence/{{id}}"
+                        },
+                        "datasette-cluster-map": {
+                            "latitude_column": "decimalLatitude",
+                            "longitude_column": "decimalLongitude"
                         }
                     }
                 }
