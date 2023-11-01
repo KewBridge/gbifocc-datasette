@@ -18,15 +18,15 @@ RUN unzip /data/gbif-occs.zip -d /data
 RUN ls -l /data
 COPY ./tab2csv.py /code/tab2csv.py
 
-# Setup to parse collector names using Bionomia utils (reqs Ruby)
-# Install ruby
-RUN \
-  apt-get update && \
-  apt-get install -y ruby
-RUN gem install dwc_agent
+## Setup to parse collector names using Bionomia utils (reqs Ruby)
+## Install ruby
+#RUN \
+#  apt-get update && \
+#  apt-get install -y ruby
+#RUN gem install dwc_agent
 
 #COPY ./extractcollectorname.py /code/extractcollectorname.py
-RUN python tab2csv.py --limit 1000 --createcols /data/${GBIF_DOWNLOAD_ID}.csv /data/gbifocc.csv 
+RUN python tab2csv.py --createcols /data/${GBIF_DOWNLOAD_ID}.csv /data/gbifocc.csv 
 #RUN python extractcollectorname.py /data/gbifocc-temp.csv /data/gbifocc.csv 
 RUN csvs-to-sqlite /data/gbifocc.csv /code/gbifocc.db
 RUN ls -l /code
