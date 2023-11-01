@@ -5,4 +5,5 @@ sqlite-utils
 csvs-to-sqlite
 pandas==1.5.3
 bananompy
+datasette-jellyfish
 tqdm
