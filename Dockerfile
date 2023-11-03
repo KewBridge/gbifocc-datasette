@@ -16,6 +16,7 @@ RUN ls -lh /data
 RUN unzip /data/gbif-occs.zip -d /data
 RUN ls -lh /data
 COPY ./tab2csv.py /code/tab2csv.py
+COPY ./getDownloadMetadata.py /code/getDownloadMetadata.py
 
 RUN python tab2csv.py --createcols /data/${GBIF_DOWNLOAD_ID}.csv /data/gbifocc.csv 
 RUN csvs-to-sqlite /data/gbifocc.csv /code/gbifocc.db
