@@ -1,6 +1,6 @@
 ---
 title: GBIF occurrence Datasette
-emoji: 🚀
+emoji: 🌱
 colorFrom: red
 colorTo: purple
 sdk: docker
