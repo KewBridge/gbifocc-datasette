@@ -3,7 +3,7 @@ from pygbif import occurrences as occ
 import json
 
 
-licences = {'http://creativecommons.org/licenses/by-nc/4.0/legalcode':'CC BY-NC 4.0'}
+licenses = {'http://creativecommons.org/licenses/by-nc/4.0/legalcode':'CC BY-NC 4.0'}
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("inputfile")
@@ -17,10 +17,10 @@ if __name__ == '__main__':
         datasette_metadata = json.load(f_in)
  
     gbif_metadata = occ.download_meta(key = args.download_id)
-    licence_url = gbif_metadata['license']
-    if licence_url in licences:
-        datasette_metadata['licence'] = licences[licence_url]
-        datasette_metadata['licence_url'] = licence_url
+    license_url = gbif_metadata['license']
+    if license_url in licenses:
+        datasette_metadata['license'] = licenses[license_url]
+        datasette_metadata['license_url'] = license_url
     datasette_metadata['source_url'] = 'https://doi.org/{}'.format(gbif_metadata['doi'])
 
     datasette_metadata_json = json.dumps(datasette_metadata, indent=4)
