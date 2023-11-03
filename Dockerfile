@@ -16,16 +16,18 @@ RUN ls -lh /data
 RUN unzip /data/gbif-occs.zip -d /data
 RUN ls -lh /data
 COPY ./tab2csv.py /code/tab2csv.py
-COPY ./getDownloadMetadata.py /code/getDownloadMetadata.py
+
 
 RUN python tab2csv.py --createcols /data/${GBIF_DOWNLOAD_ID}.csv /data/gbifocc.csv 
 RUN csvs-to-sqlite /data/gbifocc.csv /code/gbifocc.db
 RUN ls -l /code
 RUN sqlite-utils tables /code/gbifocc.db --counts
 RUN sqlite-utils enable-fts /code/gbifocc.db gbifocc collectorNameAndNumber
-
 RUN chmod 755 /code/gbifocc.db
 
-RUN python getDownloadMetadata.py ./metadata.json /code/metadata.json --download_id=$GBIF_DOWNLOAD_ID
+# Create datasette metadata file
+COPY ./getDownloadMetadata.py /code/getDownloadMetadata.py
+COPY ./metadata.json /code/metadata.json
+RUN python getDownloadMetadata.py /code/metadata.json /code/metadata.json --download_id=$GBIF_DOWNLOAD_ID
 
 CMD ["datasette", "/code/gbifocc.db", "-m", "/code/metadata.json", "--host", "0.0.0.0", "--port", "7860"]
