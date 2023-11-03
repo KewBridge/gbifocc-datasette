@@ -1,5 +1,5 @@
 ---
-title: Ih Datasette
+title: GBIF occurrence Datasette
 emoji: 🚀
 colorFrom: red
 colorTo: purple
