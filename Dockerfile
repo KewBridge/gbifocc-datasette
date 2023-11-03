@@ -1,9 +1,8 @@
 FROM python:3.11
 
-#ARG GBIF_DOWNLOAD_ID="0032228-231002084531237"
-# ARG GBIF_DOWNLOAD_ID="0237899-210914110416597"
-# All solanum
-ARG GBIF_DOWNLOAD_ID="0032228-231002084531237" 
+# Download ID is set as a space variable 
+# By default it is a download of all Solanum preserved specimen records (c600K)
+ARG GBIF_DOWNLOAD_ID=$GBIF_DOWNLOAD_ID
 WORKDIR /code
 
 COPY ./requirements.txt /code/requirements.txt
