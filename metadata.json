@@ -1,5 +1,7 @@
 {
-    "title": "gbifocc-reconcile",
+    "title": "GBIF-mediated specimen occurrences",
+    "description": "This is a datasette instance containing GBIF-mediated specimen occurrences. It can be used to browse specimen records (with options to filter and facet records) and to run SQL queries. It is also configured to run an Open Refine compatible reconciliation service on collector name and number, allowing a user to easily link specimen references (as found in taxonomic literature) to these specimen records.",
+    "source": "Global Biodiversity Information Facility (GBIF)",
     "databases": {
         "gbifocc": {
             "tables": {

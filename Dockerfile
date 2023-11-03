@@ -25,6 +25,6 @@ RUN sqlite-utils enable-fts /code/gbifocc.db gbifocc collectorNameAndNumber
 
 RUN chmod 755 /code/gbifocc.db
 
-COPY ./metadata.json /code/metadata.json
+RUN python getDownloadMetadata.py ./metadata.json /code/metadata.json --download_id=$GBIF_DOWNLOAD_ID
 
 CMD ["datasette", "/code/gbifocc.db", "-m", "/code/metadata.json", "--host", "0.0.0.0", "--port", "7860"]
