@@ -1,8 +1,10 @@
 import argparse
 import pandas as pd
 import requests
+from pygbif import occurrences as occ
 from tqdm import tqdm
 tqdm.pandas()
+import os.path
 
 def getFirstFamilyName(recordedBy):
     firstFamilyName = None
@@ -46,19 +48,50 @@ def getFirstFamilyNameBulk(df,
     df[firstFamilyNameColName] = df[recordedByColName].map(results)
     return df
 
+GBIF_DOWNLOAD_DESCRIBE_URL_SIMPLE_CSV = 'https://api.gbif.org/v1/occurrence/download/describe/simpleCsv'
+GBIF_DOWNLOAD_DESCRIBE_URL_DWCA = 'https://api.gbif.org/v1/occurrence/download/describe/dwca'
+
+def getGbifDownloadColumnNames(download_format):
+    column_names = None
+    if download_format == 'SIMPLE_CSV':
+        r = requests.get(GBIF_DOWNLOAD_DESCRIBE_URL_SIMPLE_CSV)
+        columns_metadata = r.json()
+        column_names = [column_metadata['name'] for column_metadata in columns_metadata['fields']]
+    elif download_format == 'DWCA':
+        r = requests.get(GBIF_DOWNLOAD_DESCRIBE_URL_DWCA)
+        columns_metadata = r.json()
+        column_names = [column_metadata['name'] for column_metadata in columns_metadata['verbatim']['fields']]
+    return column_names
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("inputfile")
+    parser.add_argument("download_id")
     parser.add_argument("-c","--createcols", action='store_true')
     parser.add_argument("-l","--limit", type=int)
     parser.add_argument("outputfile")    
     args = parser.parse_args()
 
-    df = pd.read_csv(args.inputfile, 
+    # Determine format of datafile by accessing download metadata from GBIF API
+    gbif_metadata = occ.download_meta(key = args.download_id)
+    download_format = gbif_metadata['request']['format']
+    inputfile = None
+    column_names_simple_csv = getGbifDownloadColumnNames('SIMPLE_CSV')
+    column_names = None
+    if download_format == 'SIMPLE_CSV':
+        inputfile = '{}.csv'.format(args.download_id)
+        column_names = column_names_simple_csv
+    elif download_format == 'DWCA':
+        inputfile = 'occurrence.txt'
+        column_names_dwca = getGbifDownloadColumnNames('DWCA')
+        column_names = [column_name for column_name in column_names_dwca if column_name in column_names_simple_csv]
+        
+    df = pd.read_csv(os.path.join('data',inputfile), 
                     encoding='utf8', 
                     keep_default_na=False, 
                     on_bad_lines='skip', 
                     sep='\t',
+                    usecols=column_names,
                     nrows=args.limit)
     if args.createcols:
         # Extract unique recordedBy values

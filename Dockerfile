@@ -18,7 +18,7 @@ RUN ls -lh /data
 COPY ./tab2csv.py /code/tab2csv.py
 
 
-RUN python tab2csv.py --createcols /data/${GBIF_DOWNLOAD_ID}.csv /data/gbifocc.csv 
+RUN python tab2csv.py --createcols ${GBIF_DOWNLOAD_ID} /data/gbifocc.csv 
 RUN csvs-to-sqlite /data/gbifocc.csv /code/gbifocc.db
 RUN ls -l /code
 RUN sqlite-utils tables /code/gbifocc.db --counts
