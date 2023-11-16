@@ -66,27 +66,33 @@ def getGbifDownloadColumnNames(download_format):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument("data_dir")
     parser.add_argument("download_id")
     parser.add_argument("-c","--createcols", action='store_true')
     parser.add_argument("-l","--limit", type=int)
-    parser.add_argument("outputfile")    
+    parser.add_argument("outputfilename")    
     args = parser.parse_args()
 
     # Determine format of datafile by accessing download metadata from GBIF API
     gbif_metadata = occ.download_meta(key = args.download_id)
     download_format = gbif_metadata['request']['format']
-    inputfile = None
+    # The GBIF download format determines:
+    # (1) the columns in the download, SIMPLE_CSV being a much restricted set 
+    # of columns than DWCA
+    # (2) The name of the occurrence data file, SIMPLE_CSV : '[download_id].csv'
+    # DWCA : 'occurrence.txt'
+    inputfilename = None
     column_names_simple_csv = getGbifDownloadColumnNames('SIMPLE_CSV')
     column_names = None
     if download_format == 'SIMPLE_CSV':
-        inputfile = '{}.csv'.format(args.download_id)
+        inputfilename = '{}.csv'.format(args.download_id)
         column_names = column_names_simple_csv
     elif download_format == 'DWCA':
-        inputfile = 'occurrence.txt'
+        inputfilename = 'occurrence.txt'
         column_names_dwca = getGbifDownloadColumnNames('DWCA')
         column_names = [column_name for column_name in column_names_dwca if column_name in column_names_simple_csv]
         
-    df = pd.read_csv(os.path.join('data',inputfile), 
+    df = pd.read_csv(os.path.join(args.data_dir,inputfilename), 
                     encoding='utf8', 
                     keep_default_na=False, 
                     on_bad_lines='skip', 
@@ -103,4 +109,4 @@ if __name__ == '__main__':
         # Add column holding collector name and number
         mask = (df.recordNumber.notnull())
         df.loc[mask,'collectorNameAndNumber']=df[mask].apply(lambda row: '{} {}'.format(row['recordedBy_first_familyname'],row['recordNumber']),axis=1)
-    df.to_csv(args.outputfile, index=False, sep=',')    
+    df.to_csv(os.path.join(args.data_dir,args.outputfilename), index=False, sep=',')    
