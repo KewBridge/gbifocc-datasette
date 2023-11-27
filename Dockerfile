@@ -30,4 +30,4 @@ COPY ./getDownloadMetadata.py /code/getDownloadMetadata.py
 COPY ./metadata.json /code/metadata.json
 RUN python getDownloadMetadata.py /code/metadata.json /code/metadata.json --download_id=$GBIF_DOWNLOAD_ID
 
-CMD ["datasette", "/code/gbifocc.db", "-m", "/code/metadata.json", "--host", "0.0.0.0", "--port", "7860", "--setting sql_time_limit_ms", "3500"]
+CMD ["datasette", "/code/gbifocc.db", "-m", "/code/metadata.json", "--host", "0.0.0.0", "--port", "7860", "--setting", "sql_time_limit_ms", "3500"]
