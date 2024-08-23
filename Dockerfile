@@ -19,7 +19,7 @@ COPY ./tab2csv.py /code/tab2csv.py
 
 
 RUN python tab2csv.py --createcols /data ${GBIF_DOWNLOAD_ID} gbifocc.csv 
-RUN csvs-to-sqlite /data/gbifocc.csv /code/gbifocc.db
+RUN sqlite-utils insert /data/gbifocc.csv gbifocc /data/gbifocc.csv --csv
 RUN ls -l /code
 RUN sqlite-utils tables /code/gbifocc.db --counts
 RUN sqlite-utils enable-fts /code/gbifocc.db gbifocc collectorNameAndNumber
